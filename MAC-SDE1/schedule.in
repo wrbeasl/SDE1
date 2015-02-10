@@ -1,0 +1,37 @@
+%{
+#include "schedule.tab.h"
+%}
+COURSE "ece"[1-4][0-9]{3}
+SECTION [1-4]
+DAY "m"|"tu"|"w"|"th"|"f"
+TIME [8-9]|[1][0-9]
+NAME [a-z]+
+%%
+[ \r\t\n]+
+
+"[" return LBRACE;
+
+"]" return RBRACE;
+
+"," return COMMA;
+
+{COURSE} { yylval.ideptr=(char *)strdup(yytext);
+           return COURSE;
+         }
+
+{SECTION} { yylval.numval=atoi(yytext);
+	    return SECTION;
+	  }
+
+{DAY} { yylval.ideptr=(char *)strdup(yytext);
+	return DAY;
+      }
+
+{TIME} { yylval.numval=atoi(yytext);
+	 return TIME;
+       }
+ 
+{NAME} { yylval.ideptr=(char *)strdup(yytext);
+	 return NAME;
+       }
+%%

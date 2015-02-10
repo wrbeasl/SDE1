@@ -1,0 +1,21 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+%}
+
+digit	[1-9]
+
+%%			
+
+r
+r{digit} { yylval = atoi(yytext+1); }
+l
+l{digit} { yylval = atoi(yytext+1); }
+u
+u{digit} { yylval = atoi(yytext+1); }
+d
+d{digit} { yylval = atoi(yytext+1); }
+
+%%
+
