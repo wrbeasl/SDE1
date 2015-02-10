@@ -4,7 +4,7 @@
 
 int main() {
    printf("Motion Trajectory Checking (Scanner/Parser)");
-   printf("\nCPSC/ECE 3520 Spring 2015\n");
+   printf("\n CPSC/ECE 3520 Spring 2015\n");
    yyparse();
    return 0;
 }

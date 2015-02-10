@@ -12,5 +12,5 @@
 [d]	{ yylval.sval=(char*)strdup(yytext); return DOWN; }
 [n]	{ yylval.sval=(char*)strdup(yytext); return NONE; }
 [0-9]	{ yylval.val=atoi(yytext); return NUM;}
-.	{ printf("syntax error\n"); yyterminate(); }
+.	;
 %%

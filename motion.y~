@@ -28,7 +28,7 @@ motion:
 		  char *v = malloc(sizeof(char)*yylval.val);
 		  int i = 0;
 		  for(i = 0; i < yylval.val; ++i)
-		    v[i]=yylval.sval[0];
+		    v[i]=sval[0];
 		}
       ;
 

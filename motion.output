@@ -1,0 +1,96 @@
+Terminals unused in grammar
+
+   NONE
+
+
+Grammar
+
+    0 $accept: motion $end
+
+    1 motion: LEFT
+    2       | RIGHT
+    3       | UP
+    4       | DOWN
+    5       | NUM
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+NUM (258) 5
+LEFT (259) 1
+RIGHT (260) 2
+UP (261) 3
+DOWN (262) 4
+NONE (263)
+
+
+Nonterminals, with rules where they appear
+
+$accept (9)
+    on left: 0
+motion (10)
+    on left: 1 2 3 4 5, on right: 0
+
+
+State 0
+
+    0 $accept: . motion $end
+
+    NUM    shift, and go to state 1
+    LEFT   shift, and go to state 2
+    RIGHT  shift, and go to state 3
+    UP     shift, and go to state 4
+    DOWN   shift, and go to state 5
+
+    motion  go to state 6
+
+
+State 1
+
+    5 motion: NUM .
+
+    $default  reduce using rule 5 (motion)
+
+
+State 2
+
+    1 motion: LEFT .
+
+    $default  reduce using rule 1 (motion)
+
+
+State 3
+
+    2 motion: RIGHT .
+
+    $default  reduce using rule 2 (motion)
+
+
+State 4
+
+    3 motion: UP .
+
+    $default  reduce using rule 3 (motion)
+
+
+State 5
+
+    4 motion: DOWN .
+
+    $default  reduce using rule 4 (motion)
+
+
+State 6
+
+    0 $accept: motion . $end
+
+    $end  shift, and go to state 7
+
+
+State 7
+
+    0 $accept: motion $end .
+
+    $default  accept
