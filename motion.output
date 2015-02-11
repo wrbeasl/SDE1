@@ -5,24 +5,32 @@ Terminals unused in grammar
 
 Grammar
 
-    0 $accept: motion $end
+    0 $accept: list_option "end of file"
 
-    1 motion: LEFT
-    2       | RIGHT
-    3       | UP
-    4       | DOWN
-    5       | NUM
+    1 list_option: "end of file"
+    2            | motion "end of file"
+
+    3 motion: movement
+    4       | motion movement
+
+    5 movement: direction
+    6         | direction NUM
+
+    7 direction: LEFT
+    8          | RIGHT
+    9          | UP
+   10          | DOWN
 
 
 Terminals, with rules where they appear
 
-$end (0) 0
+"end of file" (0) 0 1 2
 error (256)
-NUM (258) 5
-LEFT (259) 1
-RIGHT (260) 2
-UP (261) 3
-DOWN (262) 4
+NUM (258) 6
+LEFT (259) 7
+RIGHT (260) 8
+UP (261) 9
+DOWN (262) 10
 NONE (263)
 
 
@@ -30,67 +38,129 @@ Nonterminals, with rules where they appear
 
 $accept (9)
     on left: 0
-motion (10)
-    on left: 1 2 3 4 5, on right: 0
+list_option (10)
+    on left: 1 2, on right: 0
+motion (11)
+    on left: 3 4, on right: 2 4
+movement (12)
+    on left: 5 6, on right: 3 4
+direction (13)
+    on left: 7 8 9 10, on right: 5 6
 
 
 State 0
 
-    0 $accept: . motion $end
+    0 $accept: . list_option "end of file"
 
-    NUM    shift, and go to state 1
-    LEFT   shift, and go to state 2
-    RIGHT  shift, and go to state 3
-    UP     shift, and go to state 4
-    DOWN   shift, and go to state 5
+    "end of file"  shift, and go to state 1
+    LEFT           shift, and go to state 2
+    RIGHT          shift, and go to state 3
+    UP             shift, and go to state 4
+    DOWN           shift, and go to state 5
 
-    motion  go to state 6
+    list_option  go to state 6
+    motion       go to state 7
+    movement     go to state 8
+    direction    go to state 9
 
 
 State 1
 
-    5 motion: NUM .
+    1 list_option: "end of file" .
 
-    $default  reduce using rule 5 (motion)
+    $default  reduce using rule 1 (list_option)
 
 
 State 2
 
-    1 motion: LEFT .
+    7 direction: LEFT .
 
-    $default  reduce using rule 1 (motion)
+    $default  reduce using rule 7 (direction)
 
 
 State 3
 
-    2 motion: RIGHT .
+    8 direction: RIGHT .
 
-    $default  reduce using rule 2 (motion)
+    $default  reduce using rule 8 (direction)
 
 
 State 4
 
-    3 motion: UP .
+    9 direction: UP .
 
-    $default  reduce using rule 3 (motion)
+    $default  reduce using rule 9 (direction)
 
 
 State 5
 
-    4 motion: DOWN .
+   10 direction: DOWN .
 
-    $default  reduce using rule 4 (motion)
+    $default  reduce using rule 10 (direction)
 
 
 State 6
 
-    0 $accept: motion . $end
+    0 $accept: list_option . "end of file"
 
-    $end  shift, and go to state 7
+    "end of file"  shift, and go to state 10
 
 
 State 7
 
-    0 $accept: motion $end .
+    2 list_option: motion . "end of file"
+    4 motion: motion . movement
+
+    "end of file"  shift, and go to state 11
+    LEFT           shift, and go to state 2
+    RIGHT          shift, and go to state 3
+    UP             shift, and go to state 4
+    DOWN           shift, and go to state 5
+
+    movement   go to state 12
+    direction  go to state 9
+
+
+State 8
+
+    3 motion: movement .
+
+    $default  reduce using rule 3 (motion)
+
+
+State 9
+
+    5 movement: direction .
+    6         | direction . NUM
+
+    NUM  shift, and go to state 13
+
+    $default  reduce using rule 5 (movement)
+
+
+State 10
+
+    0 $accept: list_option "end of file" .
 
     $default  accept
+
+
+State 11
+
+    2 list_option: motion "end of file" .
+
+    $default  reduce using rule 2 (list_option)
+
+
+State 12
+
+    4 motion: motion movement .
+
+    $default  reduce using rule 4 (motion)
+
+
+State 13
+
+    6 movement: direction NUM .
+
+    $default  reduce using rule 6 (movement)

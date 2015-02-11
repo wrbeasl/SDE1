@@ -4,13 +4,14 @@
 int yylex();
 int yyerror(char *s);
 int total = 0;
+void checkvalue();
 %}
 
 %union{
        int val;
        char *sval;
 }
-
+%token	      END 0 "end of file"
 %token <val>  NUM
 %token <sval> LEFT
 %token <sval> RIGHT
@@ -19,18 +20,22 @@ int total = 0;
 %token <sval> NONE
 %%
 
-motion: 
-	   LEFT { printf("%s\n", yylval.sval); }
-	  |RIGHT{  printf("%s\n", yylval.sval);  }
-          |UP	{ printf("%s\n", yylval.sval); }
-	  |DOWN { printf("%s\n", yylval.sval); }
-	  |NUM  { printf("%d\n", yylval.val); 
-		  char *v = malloc(sizeof(char)*yylval.val);
-		  int i = 0;
-		  for(i = 0; i < yylval.val; ++i)
-		    v[i]=yylval.sval[0];
-		}
-      ;
+list_option: END | motion END;
+
+motion:
+      movement | motion movement;
+
+movement: 
+      direction | direction value;
+
 
 
 %%
+
+void checkval(){
+  if(total==0)
+     printf("***** valid motion path AND CLOSED PATH *****\n");
+  else
+     printf("***** scan/parse for valid motion path successful *****\n");
+
+}

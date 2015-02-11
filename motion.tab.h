@@ -45,6 +45,7 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
+    END = 0,
     NUM = 258,
     LEFT = 259,
     RIGHT = 260,
@@ -59,12 +60,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 9 "motion.y" /* yacc.c:1909  */
+#line 10 "motion.y" /* yacc.c:1909  */
 
        int val;
        char *sval;
 
-#line 68 "motion.tab.h" /* yacc.c:1909  */
+#line 69 "motion.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
